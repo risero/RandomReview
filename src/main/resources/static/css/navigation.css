@@ -1,0 +1,95 @@
+/* µ¼º½À¸ */
+.header {
+    background-color: #222;
+    height: 50px;
+    width: 100%;
+    overflow: hidden;
+}
+
+.nav-top {
+    height: 50px;
+    width: 100%;
+}
+
+/* ×ó²àµ¼º½À¸ */
+/* logo */
+.logo {
+    float: left;
+    height: 50px;
+    width: 150px;
+    line-height: 50px;
+    text-indent: -9999px;
+    font-size: 12px;
+    overflow: hidden;
+}
+
+.nav-left .logo h1 {
+    margin: 0;
+    padding: 0;
+}
+
+.logo a {
+    height: 50px;
+    width: 150px;
+    line-height: 50px;
+    display: block;
+    background-image: url('../images/logo.jpg');
+    -webkit-background-size: 50px 150px;
+    background-size: 150px 50px;
+}
+
+.nav-item ul {
+    float: left;
+    margin: 0;
+}
+
+.nav-item li {
+    float: left;
+    text-align: center;
+    line-height: 50px;
+    background-color: #222;
+    font-size: 16px;
+}
+
+.nav-item li:hover {
+    background-color: #080808;
+}
+
+.nav-item li a {
+    display: block;
+    width: auto;
+    text-decoration: none;
+    color: #ccc;
+    padding: 0 30px;
+}
+
+.nav-item li a {
+    color: #FFF;
+}
+
+/* ÓÒ²àµ¼º½À¸ */
+.nav-right {
+    float: right;
+}
+
+.nav-right li {
+    float: left;
+    line-height: 50px;
+    color: #FFF;
+}
+
+.nav-right li:first-child {
+    position: relative;
+    margin-right: 20px;
+}
+
+.nav-right img {
+    height: 40px;
+    width: 40px;
+    margin-bottom: 5px;
+    display: inline-block;
+    background-color: #FFF;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+}
