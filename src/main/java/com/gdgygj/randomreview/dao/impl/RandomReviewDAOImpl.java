@@ -63,10 +63,8 @@ public class RandomReviewDAOImpl implements IRandomReviewDAO {
                 setData(row, reviewList, j);
             }
         }
-
-        // 设置总数
-//        QuestionBank questionBank = new QuestionBank();
-//        questionBank.setReviewList(reviewList);
+        // 删除第0个元素
+        reviewList.remove(0);
         this.reviewList = reviewList;
         return reviewList;
     }
@@ -83,32 +81,18 @@ public class RandomReviewDAOImpl implements IRandomReviewDAO {
 
     @Override
     public Integer parseQuestionFile(InputStream questionFile) throws IOException {
-        XSSFWorkbook workboot = new XSSFWorkbook(questionFile);
+        return questionList(questionFile).size();
+    }
 
-        // 存储每一行题目对象
-        List<Review> reviewList = new ArrayList<Review>();
-
-        int rowCount = 0;
-
-        // 迭代每一个选项卡sheet
-        for (int i = 0; i < workboot.getNumberOfSheets(); i++) {
-            // 获取每一个sheet
-            XSSFSheet sheet = workboot.getSheetAt(i);
-            // 不存在sheet则跳过循环
-            if(sheet == null){
-                continue;
-            }
-            // 循环获取每一个sheet的每一行数据，从第一行到最后一行遍历
-            for (int j = 0; j <= sheet.getLastRowNum(); j++) {
-                rowCount = j;
-                // 获取每一行数据
-                XSSFRow row = sheet.getRow(j);
-
-                // 设置数据
-                setData(row, reviewList, j);
+    @Override
+    public Review getQuestionById(Long questionId) {
+        List<Review> reviewList = getReviewList();
+        for (Review review : reviewList) {
+            if(review.getId() == questionId){
+                return review;
             }
         }
-        return rowCount;
+        return null;
     }
 
     /**

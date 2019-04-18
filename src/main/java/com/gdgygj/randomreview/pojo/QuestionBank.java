@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,4 +28,14 @@ public class QuestionBank {
     private String questionBankName; // 题库名
 
     private Integer questionRandomNumber; // 随机出题数
+
+    private Integer successCount = 0; // 正确数
+
+    private Integer errorCount = 0; // 错误数
+
+    private List<Review> hasResult = new ArrayList<>(); // 存储已回答的题目
+
+    private Review currentReview; // 当前题目
+
+    private boolean isOver; // 是否已经答题结束
 }

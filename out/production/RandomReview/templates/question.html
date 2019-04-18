@@ -3,167 +3,130 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>随机题库</title>
-    <link rel="stylesheet" href="../static/bootstrap-3.3.7-dist/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="../static/css/base.css"/>
-    <link rel="stylesheet" href="../static/css/question.css"/>
-    <link rel="stylesheet" href="../static/css/navigation.css"/>
 
-    <script src="../static/js/jquery-1.11.2.min.js"></script>
-    <script src="../static/js/index.js"></script>
-    <script src="../static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <!-- 引用通用样式 -->
+    <title th:replace="common/resources :: resources">随机题库</title>
+    <link rel="stylesheet" th:href="@{/css/question.css}"/>
+    <script th:src="@{/js/question.js}"></script>
 </head>
 <body>
-    <div class="header">
-        <div class="w">
-            <!-- 导航栏 -->
-            <div class="header">
-                <div class="w">
-                    <!-- 导航栏 -->
-                    <nav class="nav-top">
-                        <!-- 左侧导航栏 -->
-                        <div class="nav-left">
-                            <div class="logo">
-                                <h1><a href="#">联想</a></h1>
-                            </div>
-                            <div class="nav-item">
-                                <ul>
-                                    <li><a href="#">首页</a></li>
-                                    <li><a href="#">文件</a></li>
-                                    <li><a href="#">关于</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <!--  右侧导航栏 -->
-                        <div class="nav-right">
-                            <ul>
-                                <li><img src="../static/images/default.png" alt=""/></li>
-                                <li>用户名</li>
-                            </ul>
-                        </div>
-                    </nav>
+    <!-- 导航栏 -->
+    <div th:replace="navigation :: div"></div>
+
+    <div class="main">
+        <!-- 题目数 -->
+        <div class="question-count">
+            <div class="question">
+                <h1 th:text="${session.questionBank.questionBankName}"></h1>
+                <div class="question-progress">
+                    <span class="current-question" th:text="${session.questionBank.currentQuestion}">15</span>
+                    <span>/</span>
+                    <span class="total-count" th:text="${session.questionBank.questionRandomNumber}">300</span>
+                </div>
+                <form id="currentQuestion" action="/question" method="post">
+                    <input type="hidden" th:attr="value=${session.questionBank.currentQuestion}" name="currentQuestion">
+                </form>
+            </div>
+            <!-- 进度条 -->
+            <!--<div class="progress">-->
+            <!--<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">-->
+            <!--<span class="sr-only">40% Complete (success)</span>-->
+            <!--</div>-->
+            <!--</div>-->
+        </div>
+
+        <div class="question">
+            <!-- 题目 -->
+            <div class="question-content">
+                <div class="subject-title">
+                    <i></i>
+                    <div class="question-type" th:text="${session.questionBank.currentReview.questionType}">单选题</div>
+                </div>
+                <!-- 题目内容 -->
+                <div class="subject-main">
+                    <div class="question-title">
+                        <strong th:text="${session.questionBank.currentReview.questionStem}">Java的底层内存结构</strong>
+                        <span id="questionResult"></span>
+                    </div>
+                    <!-- thymeleaf：th:attr（可以定义html的属性，并给html的属性设置值） -->
+                    <input type="hidden" id="questionId" th:attr="data-id=${session.questionBank.currentReview.id}">
+                    <div class="result-option">
+                        <ul>
+                            <li class="question-item" th:if="${session.questionBank.currentReview.AOption != null}">
+                                <div class="radio">
+                                    <label for="optionsRadios1">
+                                        <span class="icons"><i></i></span>
+                                        <input type="radio" class="option" name="AOption" id="optionsRadios1" checked>
+                                        <pre th:text="${session.questionBank.currentReview.AOption}">选项A</pre>
+                                    </label>
+                                </div>
+                            </li>
+                            <li class="question-item" th:if="${session.questionBank.currentReview.BOption != null}">
+                                <div class="radio">
+                                    <label for="optionsRadios2">
+                                        <span class="icons"><i></i></span>
+                                        <input type="radio" class="option" name="BOption" id="optionsRadios2" checked>
+                                        <pre th:text="${session.questionBank.currentReview.BOption}">选项B</pre>
+                                    </label>
+                                </div>
+                            </li>
+                            <li class="question-item" th:if="${session.questionBank.currentReview.COption != null}">
+                                <div class="radio">
+                                    <label for="optionsRadios3">
+                                        <span class="icons"><i></i></span>
+                                        <input type="radio" class="option" name="COption" id="optionsRadios3" checked>
+                                        <pre th:text="${session.questionBank.currentReview.COption}">选项C</pre>
+                                    </label>
+                                </div>
+                            </li>
+                            <li class="question-item" th:if="${session.questionBank.currentReview.DOption != null}">
+                                <div class="radio">
+                                    <label for="optionsRadios4">
+                                        <span class="icons"><i></i></span>
+                                        <input type="radio" class="option" name="DOption" id="optionsRadios4" checked>
+                                        <pre th:text="${session.questionBank.currentReview.DOption}">选项D</pre>
+                                    </label>
+                                </div>
+                            </li>
+                            <li class="question-item" th:if="${session.questionBank.currentReview.EOption != null}">
+                                <div class="radio">
+                                    <label for="optionsRadios5">
+                                        <span class="icons"><i></i></span>
+                                        <input type="radio" class="option" name="EOption" id="optionsRadios5" checked>
+                                        <pre th:text="${session.questionBank.currentReview.EOption}">选项E</pre>
+                                    </label>
+                                </div>
+                            </li>
+                            <li class="question-item" th:if="${session.questionBank.currentReview.FOption != null}">
+                                <div class="radio">
+                                    <label for="optionsRadios6">
+                                        <span class="icons"><i></i></span>
+                                        <input type="radio" class="option" name="FOption" id="optionsRadios6" checked>
+                                        <pre th:text="${session.questionBank.currentReview.FOption}">选项F</pre>
+                                    </label>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="question-btn">
+                        <form action="/result" method="post">
+                            <input class="btn btn-danger btn-submit" type="submit" value="提交答卷"/>
+                        </form>
+                        <a class="btn btn-success next"
+                           th:attr="href='/question?currentQuestion='+${session.questionBank.currentQuestion + 1}">下一题</a>
+                        <button class="btn btn-info question-submit">确定</button>
+                    </div>
+                    <div class="answer-sheet-box">
+                        <a href="javascript:;">收起答题卡<i></i></a>
+                        <ul class="answer-sheet-number">
+                            <li th:each="review, reviewStat : ${session.questionBank.reviewList}">
+                                <a th:attr="href='/question?currentQuestion='+${reviewStat.index + 1}" class="current"
+                                   th:text="${reviewStat.index + 1}"></a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-
-    <div class="main" th:each="questionBank : ${session.questionBank}">
-            <!-- 题目数 -->
-            <div class="question-count">
-                <div class="question">
-                    <h1>标题</h1>
-                    <span th:text="${questionBank.currentQuestion}">15</span>
-                    <span>/</span>
-                    <span th:text="${questionBank.totalCount}">300</span>
-                </div>
-                <!-- 进度条 -->
-                <!--<div class="progress">-->
-                <!--<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">-->
-                <!--<span class="sr-only">40% Complete (success)</span>-->
-                <!--</div>-->
-                <!--</div>-->
-            </div>
-            <div class="question">
-                <!-- 题目 -->
-                <div class="question-content">
-                    <div class="subject-title">
-                        <i></i>
-                        <div class="question-type" th:text="${questionBank.reviewList[0].questionType}">单选题</div>
-                    </div>
-                    <!-- 题目内容 -->
-                    <div class="subject-main">
-                        <p class="question-title" th:text="${questionBank.reviewList[0].questionStem}">Java的底层内存结构</p>
-                        <div class="result-option">
-                            <ul>
-                                <li class="question-item" th:if="${questionBank.reviewList[0].AOption != null}">
-                                    <div class="radio">
-                                        <label for="optionsRadios1">
-                                            <span class="icons"><i></i></span>
-                                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
-                                            <pre th:text="${questionBank.reviewList[0].AOption}">A选项gfhhhhhhhgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggA选项gfhhhhhhhgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg</pre>
-                                        </label>
-                                    </div>
-                                </li>
-                                <li class="question-item" th:if="${questionBank.reviewList[0].BOption != null}">
-                                    <div class="radio">
-                                        <label for="optionsRadios2">
-                                            <span class="icons"><i></i></span>
-                                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option1" checked>
-                                            <pre th:text="${questionBank.reviewList[0].BOption}">A选项gfhhhhhhhgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggA选项gfhhhhhhhgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg</pre>
-                                        </label>
-                                    </div>
-                                </li>
-                                <li class="question-item" th:if="${questionBank.reviewList[0].COption != null}">
-                                    <div class="radio">
-                                        <label for="optionsRadios3">
-                                            <span class="icons"><i></i></span>
-                                            <input type="radio" name="optionsRadios" id="optionsRadios3" value="option1" checked>
-                                            <pre th:text="${questionBank.reviewList[0].COption}">A选项gfhhhhhhhgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggA选项gfhhhhhhhgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg</pre>
-                                        </label>
-                                    </div>
-                                </li>
-                                <li class="question-item" th:if="${questionBank.reviewList[0].DOption != null}">
-                                    <div class="radio">
-                                        <label for="optionsRadios4">
-                                            <span class="icons"><i></i></span>
-                                            <input type="radio" name="optionsRadios" id="optionsRadios4" value="option1" checked>
-                                            <pre th:text="${questionBank.reviewList[0].DOption}">A选项gfhhhhhhhgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggA选项gfhhhhhhhgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg</pre>
-                                        </label>
-                                    </div>
-                                </li>
-                                <li class="question-item" th:if="${questionBank.reviewList[0].EOption != null}">
-                                    <div class="radio">
-                                        <label for="optionsRadios5">
-                                            <span class="icons"><i></i></span>
-                                            <input type="radio" name="optionsRadios" id="optionsRadios5" value="option1" checked>
-                                            <pre th:text="${questionBank.reviewList[0].EOption}">A选项gfhhhhhhhgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggA选项gfhhhhhhhgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg</pre>
-                                        </label>
-                                    </div>
-                                </li>
-                                <li class="question-item" th:if="${questionBank.reviewList[0].FOption != null}">
-                                    <div class="radio">
-                                        <label for="optionsRadios6">
-                                            <span class="icons"><i></i></span>
-                                            <input type="radio" name="optionsRadios" id="optionsRadios6" value="option1" checked>
-                                            <pre th:text="${questionBank.reviewList[0].FOption}">A选项gfhhhhhhhgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggA选项gfhhhhhhhgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg</pre>
-                                        </label>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="question-btn">
-                            <button class="btn btn-danger btn-submit">提交答卷</button>
-                            <button class="btn btn-info question-submit">确定</button>
-                            <button class="btn btn-success next">下一题</button>
-                        </div>
-                        <div class="answer-sheet-box">
-                            <a href="#">收起答题卡<i></i></a>
-                            <ul>
-                                <!-- TODO:分页样式还没做 -->
-                                <li><a href="#" class="current">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">5</a></li>
-                                <li><a href="#">6</a></li>
-                                <li><a href="#">7</a></li>
-                                <li><a href="#">8</a></li>
-                                <li><a href="3">9</a></li>
-                                <li><a href="#">10</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--<div class="footer">-->
-            <!--<div class="w">-->
-            <!--<div class="start-answer">-->
-            <!--<button>重新答题</button>-->
-            <!--<button>开始答题</button>-->
-            <!--</div>-->
-            <!--</div>-->
-            <!--</div>-->
-
     </div>
 </body>
 </html>

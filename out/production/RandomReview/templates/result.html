@@ -2,47 +2,21 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title></title>
-    <meta charset="UTF-8">
-    <title>结果评估</title>
-    <link rel="stylesheet" href="../static/bootstrap-3.3.7-dist/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="../static/css/base.css"/>
-    <link rel="stylesheet" href="../static/css/result.css"/>
-    <link rel="stylesheet" href="../static/css/navigation.css"/>
 
-    <script src="../static/js/jquery-1.11.2.min.js"></script>
-    <script src="../static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-    <script src="../static/js/index.js"></script>
-    <script src="../static/Chart/Chart.min.js"></script>
+    <!-- 引用通用样式 -->
+    <title th:replace="common/resources :: resources">结果评估</title>
+    <link rel="stylesheet" th:href="@{/css/result.css}"/>
+    <script th:src="@{/Chart/Chart.min.js}"></script>
+    <style>
+        #result_chart {
+            width: 300px;
+            height: 300px;
+        }
+    </style>
 </head>
 <body>
-<div class="header">
-    <div class="w">
-        <!-- 导航栏 -->
-        <nav class="nav-top">
-            <!-- 左侧导航栏 -->
-            <div class="nav-left">
-                <div class="logo">
-                    <h1><a href="#">联想</a></h1>
-                </div>
-                <div class="nav-item">
-                    <ul>
-                        <li><a href="#">首页</a></li>
-                        <li><a href="#">文件</a></li>
-                        <li><a href="#">关于</a></li>
-                    </ul>
-                </div>
-            </div>
-            <!--  右侧导航栏 -->
-            <div class="nav-right">
-                <ul>
-                    <li><img src="../static/images/default.png" alt=""/></li>
-                    <li>用户名</li>
-                </ul>
-            </div>
-        </nav>
-    </div>
-</div>
+    <!-- 导航栏 -->
+    <div th:replace="navigation :: div"></div>
 
     <!-- main -->
     <div class="main">
@@ -59,16 +33,19 @@
                 <!-- 答案评估-left -->
                 <div class="question-result-left">
                     <div class="result-statistic">
-                        <span class="result-score">得分：75.0</span>
+                        <span class="result-score">考试评估</span>
                     </div>
 
                     <!-- 评估信息 -->
                     <div class="question-result-info">
-                        <p><span>试卷：联想技术岗考证题</span></p>
-                        <p><span>正确题数：27/37</span></p>
-                        <p><span>得分：75.0</span></p>
-                        <p><span>用时：00:00:02</span></p>
-                        <p><button class="btn again-question">再次答题</button></p>
+                        <p>试卷：<span th:text="${session.questionBank.questionBankName}"></span></p>
+                        <p>正确题数：<span id="successCount" th:text="${session.result.successCount}"></span></p>
+                        <p>错误题数：<span id="errorCount" th:text="${session.result.errorCount}"></span></p>
+                        <p>总题数：<span id="questionTotalCount" th:text="${session.result.questionTotalCount}"></span></p>
+                        <p>正确率：<span id="accuracy" th:id="accuracy"></span></p>
+                        <!--<p><span>得分：75.0</span></p>-->
+                        <!--<p><span>用时：00:00:02</span></p>-->
+                        <p><a href="index" class="btn again-question">重新答题</a></p>
                     </div>
                 </div>
 
@@ -79,35 +56,40 @@
             </div>
         </div>
     </div>
-<style>
-    #result_chart {
-        width: 300px;
-        height: 300px;
-    }
-</style>
 
-<!-- 图形化报表 -->
-<script>
-    $(function () {
-        var ctx = document.getElementById('result_chart').getContext('2d');
-        var myChart = new Chart(ctx, {
-            type: 'pie',
-            data: {
-                labels: ['正确数', '错误数', '空'],
-                datasets: [{
-                    label: '# of Votes',
-                    data: [27, 8, 2],
-                    backgroundColor: [
-                        'rgb(139,253,155)',
-                        'rgb(255,146,121)',
-                        'rgb(167,175,172)'
-                    ],
-                    borderWidth: 1
-                }]
-            }
-        });
-    })
-</script>
+    <!-- 图形化报表 -->
+    <script>
+        $(function () {
+            var successCount = $("#successCount").text();
+            var errorCount = $("#errorCount").text();
+            var questionTotalCount = $("#questionTotalCount").text();
 
+            // 没填的题目
+            var nullCount = questionTotalCount - successCount - errorCount;
+
+            // 求正确率
+            var accuracy =  (successCount / questionTotalCount) * 100;
+            accuracy = accuracy.toFixed(1); // 取一位小数
+            $("#accuracy").text(accuracy+"%");
+
+            var ctx = document.getElementById('result_chart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: ['正确数', '错误数', '未填'],
+                    datasets: [{
+                        label: '# of Votes',
+                        data: [successCount, errorCount, nullCount],
+                        backgroundColor: [
+                            'rgb(139,253,155)',
+                            'rgb(255,146,121)',
+                            'rgb(167,175,172)'
+                        ],
+                        borderWidth: 1
+                    }]
+                }
+            });
+        })
+    </script>
 </body>
 </html>

@@ -7,6 +7,7 @@ import com.gdgygj.randomreview.pojo.Review;
 import com.gdgygj.randomreview.service.IRandomReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,7 +36,9 @@ public class RandomReviewServiceImpl implements IRandomReviewService {
     public QuestionBank randomQuestionBank(InputStream questionFile, Integer randomCount) throws IOException {
         // 1、获取所有题目
         List<Review> reviewList = randomReviewDAO.questionList(questionFile);
-
+        if(CollectionUtils.isEmpty(reviewList)){
+            throw new RuntimeException("Excel文件中没有可以解析的题目");
+        }
         // 2、获取从1~300道题目存取题库对象中
         Set<Review> reviewSet = new HashSet<>();
         reviewSet = setQuestionBank(randomCount, reviewList, reviewSet);
@@ -45,7 +48,6 @@ public class RandomReviewServiceImpl implements IRandomReviewService {
         QuestionBank questionBank = new QuestionBank();
         questionBank.setReviewList(reviewList);
         questionBank.setTotalCount(reviewList.size());
-        questionBank.setCurrentQuestion(1);
         // 4、返回题库对象
         return questionBank;
     }
@@ -67,6 +69,12 @@ public class RandomReviewServiceImpl implements IRandomReviewService {
         return questionCount;
     }
 
+    @Override
+    public Review getQuestionById(Long questionId) {
+        Review review = randomReviewDAO.getQuestionById(questionId);
+        return null;
+    }
+
     /**
      * 随机指定范围内N个不重复的数
      * 利用HashSet的特征，只能存放不同的值
@@ -79,7 +87,8 @@ public class RandomReviewServiceImpl implements IRandomReviewService {
         int i = 0;
         while (true) {
             if (i < randomNumber) {
-                int random = new Random().nextInt(randomNumber) + 1;
+                // 减1是因为根据索引获取，如果获取到和总数一样大的值会索引越界
+                int random = new Random().nextInt(reviewList.size());
                 Review review = reviewList.get(random);
                 // 判断不相同的则存起来
                 if (!reviewSet.contains(review)) {

@@ -1,4 +1,4 @@
-/* ÆÀ¹ÀÖ÷Ò³ */
+/* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò³ */
 .main {
     background-color: #FFF;
     width: 960px;
@@ -8,7 +8,7 @@
     border-radius: 0;
 }
 
-/* ÆÀ¹Àµ¼º½À¸ */
+/* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
 .menu-box {
     height: 40px;
 }
@@ -38,13 +38,13 @@
     color: #FFF;
 }
 
-/* ÆÀ¹Àmain */
+/* ï¿½ï¿½ï¿½ï¿½main */
 .question-result {
     padding-top: 30px;
     padding-left: 30px;
 }
 
-/* ÆÀ¹ÀÏêÏ¸ÐÅÏ¢ */
+/* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ï¿½Ï¢ */
 .question-result-left {
     width: 450px;
     border-right: 1px solid #ccc;
@@ -58,10 +58,10 @@
 
 .question-result-info p {
     margin-top: 15px;
+    font-weight: 700;
 }
 
 .question-result-info span {
-    font-weight: 700;
     color: #34495e;
     font-size: 16px;
 }
@@ -81,11 +81,15 @@
     margin-left: 40px;
 }
 
-.again-question{
+.again-question {
     margin-top: 10px;
     background-color: #25bb9b;
     border-radius: 5px;
     color: #FFF;
     padding: 7px 20px 7px 20px;
     font-size: 14px;
+}
+
+.again-question:hover {
+    color: #FFF;
 }

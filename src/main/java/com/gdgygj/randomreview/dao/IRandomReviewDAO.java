@@ -37,4 +37,12 @@ public interface IRandomReviewDAO {
      * @return
      */
     Integer parseQuestionFile(InputStream questionFile) throws IOException;
+
+    /**
+     * 根据id查询题目对象
+     *
+     * @param questionId
+     * @return
+     */
+    Review getQuestionById(Long questionId);
 }

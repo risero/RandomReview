@@ -11,7 +11,14 @@
     text-align: left;
     line-height: 50px;
     font-weight: normal;
-    font-size: 24px;
+    display: inline-block;
+    float: left;
+    font-size: 20px;
+}
+
+.question-progress{
+    float: right;
+    margin-right: 25px;
 }
 
 .question span {
@@ -66,11 +73,23 @@
     margin-bottom: 30px;
 }
 
-.subject-main p {
+.subject-main strong,span {
     padding-top: 5px;
     text-align: left;
     height: 50px;
     line-height: 50px;
+}
+
+.question-title strong {
+    font-weight: 400;
+    display: inline-block;
+}
+
+.question-title span {
+    margin-left: 5px;
+    color: #25bb9b;
+    font-size: 18px;
+    display: inline-block;
 }
 
 /* 答题选项 */
@@ -211,6 +230,11 @@
     position: absolute;
     top: 3px;
     left: 90px;
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    transform: rotate(90deg);
 }
 
 .answer-sheet-box ul {
@@ -220,8 +244,10 @@
 .answer-sheet-box li {
     background-color: #dce4ec;
     text-align: center;
-    display: inline-block;
+    display: none;
     margin-right: 10px;
+    float: left;
+    margin-bottom: 10px;
 }
 
 .answer-sheet-box li a {

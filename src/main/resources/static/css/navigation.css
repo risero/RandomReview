@@ -1,4 +1,4 @@
-/* µ¼º½À¸ */
+/* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
 .header {
     background-color: #222;
     height: 50px;
@@ -11,7 +11,7 @@
     width: 100%;
 }
 
-/* ×ó²àµ¼º½À¸ */
+/* ï¿½ï¿½àµ¼ï¿½ï¿½ï¿½ï¿½ */
 /* logo */
 .logo {
     float: left;
@@ -67,7 +67,7 @@
     color: #FFF;
 }
 
-/* ÓÒ²àµ¼º½À¸ */
+/* ï¿½Ò²àµ¼ï¿½ï¿½ï¿½ï¿½ */
 .nav-right {
     float: right;
 }
@@ -86,7 +86,6 @@
 .nav-right img {
     height: 40px;
     width: 40px;
-    margin-bottom: 5px;
     display: inline-block;
     background-color: #FFF;
     -webkit-border-radius: 50%;

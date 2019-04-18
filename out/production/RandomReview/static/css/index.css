@@ -13,15 +13,6 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
-body, html {
-    background: url("../images/timg.jpg");
-    opacity: 1;
-}
-
-body, html:before {
-    opacity: 1;
-}
-
 .main {
     border-radius: 0;
     padding: 30px 0 30px 50px;
@@ -89,6 +80,12 @@ body, html:before {
     margin-bottom: 20px;
 }
 
-.question-submit button{
-    width: 100px;
+.question-submit .btn.disabled, .btn[disabled], fieldset[disabled] .btn {
+    padding: 5px 12px; !important;
+    margin-bottom: 0;
+    line-height: 1.42857143;
+    font-size: 14px;
+    border-radius: 4px;
 }
+
+
