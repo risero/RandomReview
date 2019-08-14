@@ -1,0 +1,91 @@
+@font-face {font-family: 'iconfont';
+    src: url('../iconfont/iconfont.eot');
+    src: url('../iconfont/iconfont.eot?#iefix') format('embedded-opentype'),
+    url('../iconfont/iconfont.woff') format('woff'),
+    url('../iconfont/iconfont.ttf') format('truetype'),
+    url('../iconfont/iconfont.svg#iconfont') format('svg');
+}
+.iconfont {
+    font-family: "iconfont" !important;
+    font-size: 24px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.main {
+    border-radius: 0;
+    padding: 30px 0 30px 50px;
+    background: url('../images/bg.png') no-repeat 100% 100%;
+    width: 970px;
+    margin: 30px auto;
+    text-align: left;
+    position: relative;
+}
+
+.question-upload {
+    position: relative;
+}
+
+.question-upload input {
+    opacity: 0;
+}
+
+.question-upload p {
+    position: absolute;
+    color: #555;
+    top: 0;
+    left: 0;
+}
+.question-upload label {
+    height: 200px;
+    width: 360px;
+    /*height: 150px;*/
+    /*width: 170px;*/
+    display: block;
+    /*margin-left: 100px;*/
+    border: 2px dashed #FFF;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    position: relative;
+    overflow: hidden;
+}
+.question-upload label span {
+    display: block;
+    width: 90px;
+    font-size: 90px;
+    color: #FFF;
+    line-height: 90px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+.question-upload label:hover {
+    cursor: pointer;
+    background: rgba(0,0,0,0.3);
+    /*opacity: 0.8; /!*图片透明度*!/*/
+}
+
+.question-info{
+    width: 360px;
+}
+
+.question-info .input-group {
+    margin-bottom: 20px;
+}
+
+.question-submit .btn.disabled, .btn[disabled], fieldset[disabled] .btn {
+    padding: 5px 12px; !important;
+    margin-bottom: 0;
+    line-height: 1.42857143;
+    font-size: 14px;
+    border-radius: 4px;
+}
+
+

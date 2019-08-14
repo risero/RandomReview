@@ -1,0 +1,36 @@
+* {
+    padding: 0;
+    margin: 0;
+    vertical-align: middle;
+}
+
+.w {
+    width: 960px;
+    margin: 0 auto;
+}
+
+li {
+    list-style-type: none;
+}
+
+.clearfix{
+    *zoom:1
+}
+
+.clearfix:after{
+    visibility: hidden;
+    clear:both;
+    display:block;
+    content:".";height:0
+}
+
+body,html {
+    background-color: #CCC; !important;
+}
+
+.main {
+    background-color: #FFF;
+    margin: 20px auto;
+    width: 960px;
+    overflow: hidden;
+}

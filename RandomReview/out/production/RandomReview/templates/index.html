@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+
+    <!-- 引用通用样式 -->
+    <title th:replace="common/resources :: resources">随机题库</title>
+    <link rel="stylesheet" th:href="@{/css/index.css}"/>
+    <link rel="stylesheet" th:href="@{/iconfont/iconfont.css}">
+
+    <link rel="stylesheet" th:href="@{/nprogress/nprogress.css}">
+    <script th:src="@{/nprogress/nprogress.js}"></script>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <div th:replace="navigation :: div"></div>
+
+    <div class="main">
+        <div class="bg"></div>
+        <form action="/test" enctype="multipart/form-data" method="post" id="questionForm">
+            <div class="question-upload">
+                <!--<p>Excel文件</p>-->
+                <label for="questionFile"><span class="iconfont icon-upload1" id="questionUpload"></span></label>
+                <input type="file" name="questionFile" id="questionFile"/>
+            </div>
+            <div class="question-info">
+                <div class="input-group">
+                    <span class="input-group-addon" id="questionBankName">标题</span>
+                    <input type="text" autocomplete="off" name="questionBankName" class="form-control"
+                           placeholder="联想技术岗位试题" aria-describedby="questionBankName">
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon" id="questionCount">题目数</span>
+                    <input type="text" class="form-control" disabled="disabled"
+                           name="totalCount" aria-describedby="questionCount">
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon" id="questionNumber">出题数</span>
+                    <input type="number" autocomplete="off" name="questionRandomNumber" class="form-control"
+                           aria-describedby="questionNumber" disabled>
+                </div>
+                <div class="question-submit">
+                    <input class="btn btn-default btn-lg" id="questionSubmit" type="submit" disabled value="开始出题"></input>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script type="text/javascript">
+        // 设置ajax异步上传时的精度条
+        $(document).ajaxStart(function () {
+            NProgress.start();
+        }).ajaxStop(function () {
+            NProgress.done();
+        });
+
+        // 图片加载完后完整的加载背景图片
+        $("html,body").css("background-image", "url(/images/timg.jpg)");
+
+        // 异步提交文件
+        $("#questionFile").on("change", function () {
+            var $files = $(this).prop('files');
+            var file = $files[0];
+            // 判断是否存在文件
+            if(file.length < 0){
+                alert('没有上传的文件');
+                return;
+            }
+            var allowtypes = ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.ms-excel'];
+            // 不是指定的文件类型
+            if(allowtypes.indexOf(file.type) <= -1){
+                alert('请上传Excel文件');
+                return;
+            }
+
+            // 异步上传文件到后台
+            var data = new FormData();
+            data.append('file', file);
+            $.ajax({
+                url: '/questionUpload',
+                type: "POST",
+                data: data,
+                contentType: false, // 必须false才会自动加上正确的Content-Type
+                /**
+                 * 必须false才会避开jQuery对 formdata 的默认处理
+                 * XMLHttpRequest会对 formdata 进行正确的处理
+                 */
+                processData: false,
+                success: function (data) {
+                    // 上传失败
+                    if(data.status !== 200){
+                        // 设置上传图标
+                        if($("#questionUpload").hasClass("icon-wenjian")){
+                            $("#questionUpload").addClass("icon-upload1");
+                        }
+                        // 设置文本框禁止修改
+                        $(".question-submit").children('input').prop('disabled', true);
+                        $("#questionNumber").siblings('input').prop('disabled', true);
+                        $("#questionCount").siblings('input').val("");
+                        $("#questionBankName").siblings('input').val("");
+                        alert(data.message);
+                        return false;
+                    }
+                    var totalCount = data.result.totalCount;
+                    var title = data.result.questionBankName;
+
+                    $("#questionCount").siblings('input').attr("value", totalCount);
+                    $("#questionBankName").siblings('input').attr("value", title);
+                    $("#questionNumber").siblings('input').attr('max', totalCount).attr('min', 0).attr("value", totalCount);
+
+                    // 设置按钮为可提交的状态
+                    $(".question-submit").children('input').prop('disabled', false).removeClass("btn-default btn-lg").addClass("btn-success");
+                    $("#questionNumber").siblings('input').prop('disabled', false);
+                    // 设置上传后的图标
+                    $("#questionUpload").removeClass("icon-upload1").addClass("icon-wenjian");
+                }
+            })
+        });
+    </script>
+</body>
+</html>

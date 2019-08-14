@@ -1,0 +1,95 @@
+/* ������ҳ */
+.main {
+    background-color: #FFF;
+    width: 960px;
+    margin-top: 20px;
+    overflow: hidden;
+    padding-bottom: 100px;
+    border-radius: 0;
+}
+
+/* ���������� */
+.menu-box {
+    height: 40px;
+}
+
+.menu-box .menu {
+    overflow: hidden;
+    border-bottom: 2px solid #25bb9b;
+}
+
+.menu-box li {
+    display: inline-block;
+}
+
+.menu-box li a {
+    display: inline-block;
+    padding: 0 15px 0;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    text-decoration: none;
+    color: #333;
+    font-size: 14px;
+}
+
+.menu-box .menu .selected a {
+    background-color: #25bb9b;
+    color: #FFF;
+}
+
+/* ����main */
+.question-result {
+    padding-top: 30px;
+    padding-left: 30px;
+}
+
+/* ������ϸ��Ϣ */
+.question-result-left {
+    width: 450px;
+    border-right: 1px solid #ccc;
+    float: left;
+    padding-left: 20px;
+}
+
+.result-statistic {
+    margin-bottom: 20px;
+}
+
+.question-result-info p {
+    margin-top: 15px;
+    font-weight: 700;
+}
+
+.question-result-info span {
+    color: #34495e;
+    font-size: 16px;
+}
+
+.result-statistic .result-score {
+    height: 28px;
+    line-height: 28px;
+    display: inline-block;
+    background: url('../images/ico-report.png') no-repeat;
+    background-position: 0 -169px;
+    color: #888;
+    padding-left: 30px;
+}
+
+.question-result-right {
+    float: left;
+    margin-left: 40px;
+}
+
+.again-question {
+    margin-top: 10px;
+    background-color: #25bb9b;
+    border-radius: 5px;
+    color: #FFF;
+    padding: 7px 20px 7px 20px;
+    font-size: 14px;
+}
+
+.again-question:hover {
+    color: #FFF;
+}

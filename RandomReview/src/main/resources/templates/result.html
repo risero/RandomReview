@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+
+    <!-- 引用通用样式 -->
+    <title th:replace="common/resources :: resources">结果评估</title>
+    <link rel="stylesheet" th:href="@{/css/result.css}"/>
+    <script th:src="@{/Chart/Chart.min.js}"></script>
+    <style>
+        #result_chart {
+            width: 300px;
+            height: 300px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <div th:replace="navigation :: div"></div>
+
+    <!-- main -->
+    <div class="main">
+        <div class="w">
+            <!-- 答案评估 导航栏 -->
+            <div class="menu-box">
+                <ul class="menu">
+                    <li class="selected"><a href="#">评估报告</a></li>
+                </ul>
+            </div>
+
+            <!-- 答案评估 -->
+            <div class="question-result">
+                <!-- 答案评估-left -->
+                <div class="question-result-left">
+                    <div class="result-statistic">
+                        <span class="result-score">考试评估</span>
+                    </div>
+
+                    <!-- 评估信息 -->
+                    <div class="question-result-info">
+                        <p>试卷：<span th:text="${session.questionBank.questionBankName}"></span></p>
+                        <p>正确题数：<span id="successCount" th:text="${session.result.successCount}"></span></p>
+                        <p>错误题数：<span id="errorCount" th:text="${session.result.errorCount}"></span></p>
+                        <p>总题数：<span id="questionTotalCount" th:text="${session.result.questionTotalCount}"></span></p>
+                        <p>正确率：<span id="accuracy" th:id="accuracy"></span></p>
+                        <!--<p><span>得分：75.0</span></p>-->
+                        <!--<p><span>用时：00:00:02</span></p>-->
+                        <p><a href="index" class="btn again-question">重新答题</a></p>
+                    </div>
+                </div>
+
+                <!-- 答案评估-right -->
+                <div class="question-result-right">
+                    <canvas id="result_chart" width="300" height="300"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 图形化报表 -->
+    <script>
+        $(function () {
+            var successCount = $("#successCount").text();
+            var errorCount = $("#errorCount").text();
+            var questionTotalCount = $("#questionTotalCount").text();
+
+            // 没填的题目
+            var nullCount = questionTotalCount - successCount - errorCount;
+
+            // 求正确率
+            var accuracy =  (successCount / questionTotalCount) * 100;
+            accuracy = accuracy.toFixed(1); // 取一位小数
+            $("#accuracy").text(accuracy+"%");
+
+            var ctx = document.getElementById('result_chart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: ['正确数', '错误数', '未填'],
+                    datasets: [{
+                        label: '# of Votes',
+                        data: [successCount, errorCount, nullCount],
+                        backgroundColor: [
+                            'rgb(139,253,155)',
+                            'rgb(255,146,121)',
+                            'rgb(167,175,172)'
+                        ],
+                        borderWidth: 1
+                    }]
+                }
+            });
+        })
+    </script>
+</body>
+</html>
